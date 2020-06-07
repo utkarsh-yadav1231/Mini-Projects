@@ -8,6 +8,7 @@ This is a classic dictionary program.
 - If there is no exact match of the word within our dictionary, then get_close_matches module will be called and it will return the values which looks somewhat similar or close to our word(that was searched earlier).  
 - If user finds the his word in the suggested list, then on entering press, the word meaning will be printed. 
 
+> Trivia : The word impossible is not in my dictionary. You can search it. LOL !  
 
 ## Screenshots
 
