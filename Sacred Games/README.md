@@ -1,6 +1,6 @@
 # Sacred Games 1.0
 
-Back Story :
+**Back Story :**
 
 You all know about Sacred Games real story, but here I had made few changes and will need your help to save Mr. Gaitonde(Our Hero).
 
