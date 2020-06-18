@@ -1,5 +1,9 @@
 # Cricket Simulation Game
-This is a Cricket Simulation game built with python program. 
+This is a Cricket Simulation game built with python program. It will print the scorecard of both the teams after the ODI match ends.
+
+There are two World XI Teams : 
+- Team ODI best  
+- Team T20 best
 
 ## To Play this Game
 - Run cricket.py in Python IDE.
