@@ -6,8 +6,7 @@ This is a Cricket Simulation game built with python program.
 
 ### Screenshots
 
-<img src="" alt="SS 1"/>
+<img src="https://github.com/utkarsh-yadav1231/Mini-Projects/blob/master/Cricket%20Simulation%20Game/Screenshots/SS1.PNG" alt="SS 1"/>
 
-<img src="" alt="SS 2"/>
+<img src="https://github.com/utkarsh-yadav1231/Mini-Projects/blob/master/Cricket%20Simulation%20Game/Screenshots/SS2.PNG" alt="SS 2"/>
 
-<img src="" alt="SS 3"/>
