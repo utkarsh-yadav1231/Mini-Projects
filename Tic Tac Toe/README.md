@@ -1,3 +1,6 @@
+# TIC TAC TOE GAME
+This is a classic TIC TAC TOE game built with python program.   
+
 ## To Play this Game
 - Run Tic_Tac_Toe.py in Python IDE.
 
