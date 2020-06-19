@@ -7,12 +7,12 @@ This is a Snake Game python script.
 - If the player presses S and then Enter, their snake will slink one square down.
 - If the player presses A and then Enter, their snake will slink one square left.
 - If the player presses D and then Enter, their snake will slink one square right.
-- it the player just hit Enter without pressing any other key, then it will move one square in whichever direction it was traveling before.
+- If the player just hit Enter without pressing any other key, then it will move one square in whichever direction it was traveling before.
 
 
 ### Screenshots
 
-<img src="" alt="SS1"/>
+<img src="https://github.com/utkarsh-yadav1231/Mini-Projects/blob/master/Snake%20Game/Screenshots/SS1.PNG" alt="SS1"/>
 
-<img src="" alt="SS2"/>
+<img src="https://github.com/utkarsh-yadav1231/Mini-Projects/blob/master/Snake%20Game/Screenshots/SS2.PNG" alt="SS2"/>
 
