@@ -10,9 +10,11 @@ This is a Snake Game python script.
 - If the player just hit Enter without pressing any other key, then it will move one square in whichever direction it was traveling before.
 
 
-### Screenshots
+
 
 <img src="https://github.com/utkarsh-yadav1231/Mini-Projects/blob/master/Snake%20Game/Screenshots/SS1.PNG" alt="SS1"/>
+
+### Screenshot
 
 <img src="https://github.com/utkarsh-yadav1231/Mini-Projects/blob/master/Snake%20Game/Screenshots/SS2.PNG" alt="SS2"/>
 
