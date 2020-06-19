@@ -18,3 +18,4 @@ This is a Snake Game python script.
 
 <img src="https://github.com/utkarsh-yadav1231/Mini-Projects/blob/master/Snake%20Game/Screenshots/SS2.PNG" alt="SS2"/>
 
+<img src="https://github.com/utkarsh-yadav1231/Mini-Projects/blob/master/Snake%20Game/Screenshots/SS3.gif" alt="SS3"/>
