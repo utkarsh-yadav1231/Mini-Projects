@@ -8,6 +8,7 @@ This repository contains all the Mini Projects, I have done till now.
   4. Tic Tac Toe                ( Python )
   5. Cricket Simulation Game    ( Python )
   6. Locate Me - IP Tracker     ( Python )
+  6. Classic Snake Game         ( Python )
   </pre>
   
 
