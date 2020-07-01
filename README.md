@@ -9,6 +9,7 @@ This repository contains all the Mini Projects, I have done till now.
   5. Cricket Simulation Game    ( Python )
   6. Locate Me - IP Tracker     ( Python )
   7. Classic Snake Game         ( Python )
+  8. Commodity                  ( Python )
   </pre>
   
 
