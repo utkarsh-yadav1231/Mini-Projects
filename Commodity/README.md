@@ -6,5 +6,5 @@ This will show you the current Gold and Silver Rates/Price currently with this p
 
 ### Screenshots
 
-<img src="" alt="SS 1"/>
+<img src="https://github.com/utkarsh-yadav1231/Mini-Projects/blob/master/Commodity/Commodity%20Prices%20Output.PNG" alt="SS 1"/>
 
