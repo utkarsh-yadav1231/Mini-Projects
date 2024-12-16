@@ -1,164 +1,162 @@
 {
-    "$schema": "https://vega.github.io/schema/vega/v5.json",
-    "description": "Bugs Calendar",
-  
-    "signals": [
-      {"name": "step", "value": 19},
-      {"name": "offset", "value": 10},
-      {"name": "width", "update": "step * 52 + offset * 11"},
-      {"name": "height", "update": "step * 5"}
-    ],
-  
-    "data": [
-      {
-        "name": "sp500",
-        "url": "https://raw.githubusercontent.com/utkarsh-yadav1231/Mini-Projects/refs/heads/master/sp500-2000-1-year.csv",
-        "format": {"type": "csv", "parse": {"close": "number", "date": "date"}},
-        "transform": [
-          {
-            "type": "formula",
-            "expr": "year(datum.date)",
-            "as": "year"
-          },
-          {
-            "type": "timeunit", "field": "date",
-            "units": ["year", "week"],
-            "as": ["w0", "w1"]
-          },
-          {"type": "formula", "expr": "timeOffset('day', datum.w0)", "as": "w0"},
-          {
-            "type": "timeunit", "field": "date",
-            "units": ["day"],
-            "as": ["d0", "d1"]
-          }
-        ]
-      }
-    ],
-  
-    "scales": [
-      {
-        "name": "x",
-        "type": "band",
-        "domain": {"data": "sp500", "field": "d0", "sort": true},
-        "range": {"step": {"signal": "step"}}
-      }
-    ],
-  
-    "layout": {
-      "columns": 1,
-      "padding": 15
-    },
-  
-    "marks": [
-      {
-        "type": "group",
-  
-        "from": {
-          "facet": {
-            "data": "sp500",
-            "name": "values",
-            "groupby": "year"
-          }
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Bugs Calendar",
+
+  "signals": [
+    {"name": "step", "value": 19},
+    {"name": "offset", "value": 10},
+    {"name": "width", "update": "step * 52 + offset * 11"},
+    {"name": "height", "update": "step * 5"}
+  ],
+
+  "data": [
+    {
+      "name": "sp500",
+      "url": "https://raw.githubusercontent.com/utkarsh-yadav1231/Mini-Projects/refs/heads/master/sp500-2000-1-year.csv",
+      "format": {"type": "csv", "parse": {"close": "number", "date": "date"}},
+      "transform": [
+        {
+          "type": "formula",
+          "expr": "year(datum.date)",
+          "as": "year"
         },
-  
-        "sort": {
-          "field": "datum.year",
-          "order": "descending"
+        {
+          "type": "timeunit", "field": "date",
+          "units": ["year", "week"],
+          "as": ["w0", "w1"]
         },
-  
-        "data": [
-          {
-            "name": "weeks",
-            "transform": [
-              {"type": "sequence", "start": 0, "stop": 53, "as": "weeknum"},
-              {"type": "formula", "expr": "datetime(parent.year, 0, 1 + datum.weeknum * 7)", "as": "date"},
-              {"type": "timeunit", "units": ["year", "week"], "field": "date", "as": ["w0", "w1"]},
-              {"type": "formula", "expr": "timeOffset('day', datum.w0)", "as": "w0"}
-            ]
-          }
-        ],
-  
-        "scales": [
-          {
-            "name": "y",
-            "type": "band",
-            "domain": {"data": "weeks", "field": "w0", "sort": true},
-            "range": {"step": {"signal": "step"}}
-          }
-        ],
-  
-        "axes": [
-          {
-            "orient": "top", "scale": "x",
-            "ticks": false, "domain": false, "labelPadding": 8,
-            "format": "%a", "formatType": "time",
-            "title": {"signal": "parent.year"},
-            "titleAngle": 0, "titleAlign": "center",
-            "titleX": -20, "titleY": -8,  "titleFontSize": 10.5,
-            "encode": {
-              "labels": {
-                "update": {
-                  "text": {"signal": "timeFormat(datum.value, '%a')[0]"}
-                }
-              }
-            }
-          },
-          {
-            "orient": "left", "scale": "y",
-            "ticks": false, "domain": false, "labelPadding": 6,
-            "format": "%b", "formatType": "time",
-            "labelAlign": "right",
-            "encode": {
-              "labels": {
-                "update": {
-                  "y": {
-                    "scale": "y", "field": "value", "band": 0,
-                    "offset": {"signal": "month(datum.value) * 3 * offset"}
-                  },
-                  "opacity": {"signal": "date(datum.value) < 8 ? 1 : 0"}
-                }
-              }
-            }
-          }
-        ],
-  
-        "marks": [
-          {
-            "type": "rect",
-            "from": {"data": "values"},
-            "encode": {
-              "enter": {
-                "x": {"scale": "x", "field": "d0"},
-                "width": {"scale": "x", "band": 1, "offset": -1},
-                "y": {"scale": "y", "field": "w0", "offset": {"signal": "month(datum.date) * 3 * offset"}},
-                "height": {"scale": "y", "band": 1, "offset": -1},
-                "cornerRadius": {"value": 2},
-                "tooltip": {"signal": "timeFormat(datum.date, '%a %b %d, %Y')"}
-              },
+        {"type": "formula", "expr": "timeOffset('day', datum.w0)", "as": "w0"},
+        {
+          "type": "timeunit", "field": "date",
+          "units": ["day"],
+          "as": ["d0", "d1"]
+        }
+      ]
+    }
+  ],
+
+  "scales": [
+    {
+      "name": "x",
+      "type": "band",
+      "domain": {"data": "sp500", "field": "d0", "sort": true},
+      "range": {"step": {"signal": "step"}}
+    }
+  ],
+
+  "layout": {
+    "columns": 1,
+    "padding": 15
+  },
+
+  "marks": [
+    {
+      "type": "group",
+
+      "from": {
+        "facet": {
+          "data": "sp500",
+          "name": "values",
+          "groupby": "year"
+        }
+      },
+
+      "sort": {
+        "field": "datum.year",
+        "order": "descending"
+      },
+
+      "data": [
+        {
+          "name": "weeks",
+          "transform": [
+            {"type": "sequence", "start": 0, "stop": 53, "as": "weeknum"},
+            {"type": "formula", "expr": "datetime(parent.year, 0, 1 + datum.weeknum * 7)", "as": "date"},
+            {"type": "timeunit", "units": ["year", "week"], "field": "date", "as": ["w0", "w1"]},
+            {"type": "formula", "expr": "timeOffset('day', datum.w0)", "as": "w0"}
+          ]
+        }
+      ],
+
+      "scales": [
+        {
+          "name": "y",
+          "type": "band",
+          "domain": {"data": "weeks", "field": "w0", "sort": true},
+          "range": {"step": {"signal": "step"}}
+        }
+      ],
+
+      "axes": [
+        {
+          "orient": "top", "scale": "x",
+          "ticks": false, "domain": false, "labelPadding": 8,
+          "format": "%a", "formatType": "time",
+          "title": {"signal": "parent.year"},
+          "titleAngle": 0, "titleAlign": "center",
+          "titleX": -20, "titleY": -8,  "titleFontSize": 10.5,
+          "encode": {
+            "labels": {
               "update": {
-                "fill": {"value": "lightgreen"}
+                "text": {"signal": "timeFormat(datum.value, '%a')[0]"}
               }
             }
-          },
-          {
-            "type": "text",
-            "from": {"data": "values"},
-            "encode": {
-              "enter": {
-                "x": {"scale": "x", "field": "d0"},
-                "y": {"scale": "y", "field": "w0", "offset": {"signal": "month(datum.date) * 3 * offset"}},
-                "dy": {"signal": "step/2"},
-                "dx": {"signal": "step/2"},
-                "align": {"value": "center"},
-                "baseline": {"value": "middle"},
-                "text": {"signal": "timeFormat(datum.date, '%d')"},
-                "fill": {"value": "black"}
+          } 
+        },
+        {
+          "orient": "top", "scale": "x",
+          "ticks": false, "domain": false, "labelPadding": 26,
+          "format": "%b", "formatType": "time",
+          "labelAlign": "left",
+          "encode": {
+            "labels": {
+              "update": {
+                "x": {
+                  "scale": "x", "field": "value", "band": 0,
+                  "offset": {"signal": "month(datum.value) * offset"}
+                },
+                "opacity": {"signal": "date(datum.value) == 4 ? 1 : 0"}
               }
             }
           }
-  
-        ]
-      }
-    ]
-  }
-  
+        }
+      ],
+
+      "marks": [
+        {
+          "type": "rect",
+          "from": {"data": "values"},
+          "encode": {
+            "enter": {
+              "x": {"scale": "x", "field": "d0"},
+              "width": {"scale": "x", "band": 1, "offset": -1},
+              "y": {"scale": "y", "field": "w0", "offset": {"signal": "month(datum.date) * 3 * offset"}},
+              "height": {"scale": "y", "band": 1, "offset": -1},
+              "cornerRadius": {"value": 2},
+              "tooltip": {"signal": "timeFormat(datum.date, '%a %b %d, %Y')"}
+            },
+            "update": {
+              "fill": {"value": "lightgreen"}
+            }
+          }
+        },
+        {
+          "type": "text",
+          "from": {"data": "values"},
+          "encode": {
+            "enter": {
+              "x": {"scale": "x", "field": "d0"},
+              "y": {"scale": "y", "field": "w0", "offset": {"signal": "month(datum.date) * 3 * offset"}},
+              "dy": {"signal": "step/2"},
+              "dx": {"signal": "step/2"},
+              "align": {"value": "center"},
+              "baseline": {"value": "middle"},
+              "text": {"signal": "timeFormat(datum.date, '%d')"},
+              "fill": {"value": "black"}
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
