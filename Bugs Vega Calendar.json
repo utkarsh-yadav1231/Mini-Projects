@@ -1,0 +1,225 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Bugs Calendar",
+  "signals": [
+    {"name": "step", "value": 19},
+    {"name": "offset", "value": 10},
+    {"name": "width", "update": "step * 52 + offset * 11"},
+    {"name": "height", "update": "step * 5"}
+  ],
+
+  "data": [
+    {
+      "name": "sp500",
+      "url": "https://raw.githubusercontent.com/vega/vega/refs/heads/main/docs/data/sp500-2000.csv",
+      "format": {"type": "csv", "parse": {"close": "number", "date": "date"}},
+      "transform": [
+        {
+          "type": "formula",
+          "expr": "year(datum.date)",
+          "as": "year"
+        },
+        {
+          "type": "timeunit", "field": "date",
+          "units": ["year", "week"],
+          "as": ["w0", "w1"]
+        },
+        {"type": "formula", "expr": "timeOffset('day', datum.w0)", "as": "w0"},
+        {
+          "type": "timeunit", "field": "date",
+          "units": ["day"],
+          "as": ["d0", "d1"]
+        }
+      ]
+    },
+    {
+      "name": "months_name",
+      "values": [
+        {"month": "January", "x": 0},
+        {"month": "February", "x": 1},
+        {"month": "March", "x": 2},
+        {"month": "April", "x": 3},
+        {"month": "May", "x": 4},
+        {"month": "June", "x": 5},
+        {"month": "July", "x": 6},
+        {"month": "August", "x": 7},
+        {"month": "September", "x": 8},
+        {"month": "October", "x": 9},
+        {"month": "November", "x": 10},
+        {"month": "December", "x": 11}
+      ]
+    },
+    {
+      "name": "weekdays_name",
+      "values": [
+        {"weekday": "S", "x": 0}, {"weekday": "M", "x": 1}, {"weekday": "T", "x": 2}, {"weekday": "W", "x": 3}, {"weekday": "T", "x": 4}, {"weekday": "F", "x": 5}, {"weekday": "S", "x": 6}, {"weekday": "S", "x": 7}, {"weekday": "M", "x": 8}, {"weekday": "T", "x": 9}, {"weekday": "W", "x": 10}, {"weekday": "T", "x": 11}, {"weekday": "F", "x": 12}, {"weekday": "S", "x": 13}, {"weekday": "S", "x": 14}, {"weekday": "M", "x": 15}, {"weekday": "T", "x": 16}, {"weekday": "W", "x": 17}, {"weekday": "T", "x": 18}, {"weekday": "F", "x": 19}, {"weekday": "S", "x": 20}, {"weekday": "S", "x": 21}, {"weekday": "M", "x": 22}, {"weekday": "T", "x": 23}, {"weekday": "W", "x": 24}, {"weekday": "T", "x": 25}, {"weekday": "F", "x": 26}, {"weekday": "S", "x": 27}, {"weekday": "S", "x": 28}, {"weekday": "M", "x": 29}, {"weekday": "T", "x": 30}, {"weekday": "W", "x": 31}, {"weekday": "T", "x": 32}, {"weekday": "F", "x": 33}, {"weekday": "S", "x": 34}, {"weekday": "S", "x": 35}, {"weekday": "M", "x": 36}, {"weekday": "T", "x": 37}, {"weekday": "W", "x": 38}, {"weekday": "T", "x": 39}, {"weekday": "F", "x": 40}, {"weekday": "S", "x": 41}, {"weekday": "S", "x": 42}, {"weekday": "M", "x": 43}, {"weekday": "T", "x": 44}, {"weekday": "W", "x": 45}, {"weekday": "T", "x": 46}, {"weekday": "F", "x": 47}, {"weekday": "S", "x": 48}, {"weekday": "S", "x": 49}, {"weekday": "M", "x": 50}, {"weekday": "T", "x": 51}, {"weekday": "W", "x": 52}, {"weekday": "T", "x": 53}, {"weekday": "F", "x": 54}, {"weekday": "S", "x": 55}, {"weekday": "S", "x": 56}, {"weekday": "M", "x": 57}, {"weekday": "T", "x": 58}, {"weekday": "W", "x": 59}, {"weekday": "T", "x": 60}, {"weekday": "F", "x": 61}, {"weekday": "S", "x": 62}, {"weekday": "S", "x": 63}, {"weekday": "M", "x": 64}, {"weekday": "T", "x": 65}, {"weekday": "W", "x": 66}, {"weekday": "T", "x": 67}, {"weekday": "F", "x": 68}, {"weekday": "S", "x": 69}, {"weekday": "S", "x": 70}, {"weekday": "M", "x": 71}, {"weekday": "T", "x": 72}, {"weekday": "W", "x": 73}, {"weekday": "T", "x": 74}, {"weekday": "F", "x": 75}, {"weekday": "S", "x": 76}, {"weekday": "S", "x": 77}, {"weekday": "M", "x": 78}, {"weekday": "T", "x": 79}, {"weekday": "W", "x": 80}, {"weekday": "T", "x": 81}, {"weekday": "F", "x": 82}, {"weekday": "S", "x": 83}
+      ]
+    }
+  ],
+
+  "scales": [
+    {
+      "name": "x",
+      "type": "band",
+      "domain": {"data": "sp500", "field": "d0", "sort": true},
+      "range": {"step": {"signal": "step"}}
+    }
+  ],
+
+  "layout": {
+    "columns": 1,
+    "padding": 15
+  },
+
+  "marks": [
+    {
+      "type": "group",
+      
+      "from": {
+        "facet": {
+          "data": "sp500",
+          "name": "values",
+          "groupby": "year"
+        }
+      },
+
+      "sort": {
+        "field": "datum.year",
+        "order": "descending"
+      },
+
+      "data": [
+        {
+          "name": "weeks",
+          "transform": [
+            {"type": "sequence", "start": 0, "stop": 53, "as": "weeknum"},
+            {"type": "formula", "expr": "datetime(parent.year, 0, 1 + datum.weeknum * 7)", "as": "date"},
+            {"type": "timeunit", "units": ["year", "week"], "field": "date", "as": ["w0", "w1"]},
+            {"type": "formula", "expr": "timeOffset('day', datum.w0)", "as": "w0"}
+          ]
+        }
+      ],
+
+      "scales": [
+        {
+          "name": "y",          
+          "type": "band",
+          "domain": {"data": "weeks", "field": "w0", "sort": true},
+          "range": {"step": {"signal": "step"}}
+        }
+      ],
+      "axes": [
+        {
+          "orient": "top",
+          "scale": "x",
+          "ticks": false,
+          "domain": false,
+          "labelPadding": 26,
+          "format": "%a",
+          "formatType": "time",
+          "title": {
+            "signal": "parent.year"
+          },
+          "titleAngle": 0,
+          "titleAlign": "center",
+          "titleX": -20,
+          "titleY": -8,
+          "titleFontSize": 10.5,
+          "encode": {
+            "labels": {
+              "update": {
+                "text": {
+                  "signal": ""
+                }
+              }
+            }
+          }
+        }
+      ],
+      "marks": [
+            {
+                "type": "rect",
+                "from": {"data": "values"},
+                "encode": {
+                    "enter": {
+                        "x": {"scale": "x", "field": "d0", "offset": {"signal": "(month(datum.date) % 12) * 9 * step"}},
+                        "width": {"scale": "x", "band": 1, "offset": -1},
+                        "y": {"scale": "y", "field": "w0", "offset": {"signal": "month(datum.date) * 3 * offset"}},
+                        "height": {"scale": "y", "band": 1, "offset": -1},
+                        "cornerRadius": {"value": 2},
+                        "tooltip": {"signal": "timeFormat(datum.date, '%a %b %d, %Y')"}
+                    },
+                    "update": {
+                        "fill": {"value": "lightgreen"},
+                        "y": {
+                            "scale": "y",
+                            "field": "w0",
+                            "offset": {
+                                "signal": "(month(datum.date) == 0 ? 0 : month(datum.date) == 1 ? -77 : month(datum.date) == 2 ? -154 : month(datum.date) == 3 ? -249 : month(datum.date) == 4 ? -325.5 : month(datum.date) == 5 ? -402 : month(datum.date) == 6 ? -497 : month(datum.date) == 7 ? -573 : month(datum.date) == 8 ? -668 : month(datum.date) == 9 ? -745 : month(datum.date) == 10 ? -822 : -917)"
+                            }
+                        }
+                    }
+                }
+            }
+            ,
+            {
+                "type": "text",
+                "from": {"data": "values"},
+                "encode": {
+                    "enter": {
+                    "x": {"scale": "x", "field": "d0", "offset": {"signal": "(month(datum.date) % 12) * 9 * step"}},
+                    "y": {"scale": "y", "field": "w0", "offset": {"signal": "month(datum.date) * 3 * offset"}},
+                    "dy": {"signal": "step/2"},
+                    "dx": {"signal": "step/2"},
+                    "align": {"value": "center"},
+                    "baseline": {"value": "middle"},
+                    "text": {"signal": "timeFormat(datum.date, '%d')"},
+                    "fill": {"value": "black"}
+                    },
+                    "update": {
+                        "y": {
+                            "scale": "y",
+                            "field": "w0",
+                            "offset": {
+                                "signal": "(month(datum.date) == 0 ? 0 : month(datum.date) == 1 ? -77 : month(datum.date) == 2 ? -154 : month(datum.date) == 3 ? -249 : month(datum.date) == 4 ? -325.5 : month(datum.date) == 5 ? -402 : month(datum.date) == 6 ? -497 : month(datum.date) == 7 ? -573 : month(datum.date) == 8 ? -668 : month(datum.date) == 9 ? -745 : month(datum.date) == 10 ? -822 : -917)"
+                            }
+                        }
+                    }
+                }
+            },            
+        {
+            "type": "text",
+            "from": {"data": "months_name"},
+            "encode": {
+                "enter": {
+                "x": {
+                    "signal": "datum.x == 0 ? 40 : datum.x == 1 ? 220 : datum.x == 2 ? 389 : datum.x == 3 ? 560 : datum.x == 4 ? 730 : datum.x == 5 ? 900 : datum.x == 6 ? 1070 : datum.x == 7 ? 1240 : datum.x == 8 ? 1415 : datum.x == 9 ? 1585 : datum.x == 10 ? 1755 : 1930"
+                },
+                "y": {"value": -35},
+                "text": {"field": "month"},
+                "align": {"value": "center"},
+                "baseline": {"value": "middle"},
+                "fill": {"value": "black"}
+                }
+            }
+        },
+        {
+          "type": "text",
+          "from": {"data": "weekdays_name"},
+          "encode": {
+            "enter": {
+            "x": {
+              "signal": "datum.x == 0 ? 8 : datum.x == 1 ? 28 : datum.x == 2 ? 46 : datum.x == 3 ? 66 : datum.x == 4 ? 85 : datum.x == 5 ? 105 : datum.x == 6 ? 124 : datum.x == 7 ? 180 : datum.x == 8 ? 200 : datum.x == 9 ? 220 : datum.x == 10 ? 238 : datum.x == 11 ? 256 : datum.x == 12 ? 276 : datum.x == 13 ? 295 : datum.x == 14 ? 350 : datum.x == 15 ? 370 : datum.x == 16 ? 390 : datum.x == 17 ? 410 : datum.x == 18 ? 430 : datum.x == 19 ? 450 : datum.x == 20 ? 470 : datum.x == 21 ? 520 : datum.x == 22 ? 540 : datum.x == 23 ? 560 : datum.x == 24 ? 580 : datum.x == 25 ? 600 : datum.x == 26 ? 620 : datum.x == 27 ? 640 : datum.x == 28 ? 690 : datum.x == 29 ? 710 : datum.x == 30 ? 730 : datum.x == 31 ? 750 : datum.x == 32 ? 770 : datum.x == 33 ? 790 : datum.x == 34 ? 810 : datum.x == 35 ? 860 : datum.x == 36 ? 880 : datum.x == 37 ? 900 : datum.x == 38 ? 920 : datum.x == 39 ? 940 : datum.x == 40 ? 960 : datum.x == 41 ? 980 : datum.x == 42 ? 1035 : datum.x == 43 ? 1055 : datum.x == 44 ? 1075 : datum.x == 45 ? 1095 : datum.x == 46 ? 1110 : datum.x == 47 ? 1130 : datum.x == 48 ? 1150 : datum.x == 49 ? 1205 : datum.x == 50 ? 1225 : datum.x == 51 ? 1245 : datum.x == 52 ? 1265 : datum.x == 53 ? 1285 : datum.x == 54 ? 1305 : datum.x == 55 ? 1325 : datum.x == 56 ? 1375 : datum.x == 57 ? 1395 : datum.x == 58 ? 1415 : datum.x == 59 ? 1435 : datum.x == 60 ? 1455 : datum.x == 61 ? 1475 : datum.x == 62 ? 1495 : datum.x == 63 ? 1545 : datum.x == 64 ? 1565 : datum.x == 65 ? 1585 : datum.x == 66 ? 1605 : datum.x == 67 ? 1625 : datum.x == 68 ? 1645 : datum.x == 69 ? 1665 : datum.x == 70 ? 1715 : datum.x == 71 ? 1735 : datum.x == 72 ? 1755 : datum.x == 73 ? 1775 : datum.x == 74 ? 1795 : datum.x == 75 ? 1815 : datum.x == 76 ? 1835 : datum.x == 77 ? 1887 : datum.x == 78 ? 1907 : datum.x == 79 ? 1927 : datum.x == 80 ? 1947 : datum.x == 81 ? 1965 : datum.x == 82 ? 1985 : datum.x == 83 ? 2005 : 2010"
+            },
+            "y": {"value": -12},
+            "text": {"field": "weekday"},
+            "align": {"value": "center"},
+            "baseline": {"value": "middle"},
+            "fill": {"value": "black"}
+            }
+          }
+        }
+       ]
+    }
+  ]
+}
